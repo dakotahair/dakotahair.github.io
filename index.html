@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3ed">
+  <meta name="description" content="DakotaHair, especialista en rubios, balayage, coloración y cuidado capilar. Agenda tu evaluación por WhatsApp.">
+  <title>DakotaHair | Especialista en rubios y balayage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Georgia:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f7f3ed;
+      --paper: #fffdfa;
+      --ink: #282522;
+      --muted: #6d665f;
+      --gold: #b28a4a;
+      --gold-dark: #87652f;
+      --line: rgba(40, 37, 34, .12);
+      --shadow: 0 20px 60px rgba(42, 34, 24, .12);
+      --radius: 24px;
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    :focus-visible { outline: 3px solid rgba(178,138,74,.45); outline-offset: 4px; }
+
+    .container { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--gold-dark); font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .18em;
+    }
+    .eyebrow::before { content: ''; width: 34px; height: 1px; background: currentColor; }
+    
+    h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.08; margin: 0; }
+    h1 { font-size: clamp(2rem, 5vw, 6.5rem); letter-spacing: -.045em; }
+    h2 { font-size: clamp(1.8rem, 4vw, 4rem); letter-spacing: -.035em; }
+    h3 { font-size: 1.55rem; }
+    p { margin: 0; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(247,243,237,.88); backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 0 clamp(20px, 5vw, 84px);
+    }
+    .brand { font-family: var(--serif); font-size: 1.55rem; letter-spacing: -.02em; }
+    .brand span { color: var(--gold-dark); }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-size: .91rem; }
+    .nav-links a:not(.nav-cta) { color: var(--muted); transition: color .2s; }
+    .nav-links a:not(.nav-cta):hover { color: var(--ink); }
+    .nav-cta, .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 48px; padding: 0 22px; border-radius: 999px;
+      background: var(--ink); color: white; border: 1px solid var(--ink);
+      font-weight: 700; font-size: .88rem; transition: .25s ease; cursor: pointer;
+    }
+    .nav-cta:hover, .btn:hover { background: var(--gold-dark); border-color: var(--gold-dark); transform: translateY(-2px); }
+    .btn-light { background: transparent; color: var(--ink); border-color: var(--line); }
+    .btn-light:hover { color: white; }
+    .menu-toggle { display: none; background: transparent; border: 0; padding: 10px; color: var(--ink); font-size: 24px; }
+
+    .hero { min-height: calc(100svh - 76px); display: grid; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100svh - 76px); }
+    .hero-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(40px, 8vw, 80px); }
+    .hero-copy h1 em { color: var(--gold-dark); font-weight: 400; font-style: italic; }
+    .hero-copy > p { max-width: 580px; margin-top: 28px; color: var(--muted); font-size: clamp(1rem, 1.45vw, 1.18rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+    .hero-note { display: flex; align-items: center; gap: 12px; margin-top: 30px; color: var(--muted); font-size: .88rem; }
+    .hero-note span { width: 8px; height: 8px; border-radius: 50%; background: #4f8b62; box-shadow: 0 0 0 5px rgba(79,139,98,.12); }
+    .hero-image { min-height: 620px; position: relative; overflow: hidden; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(247,243,237,.16), transparent 32%); pointer-events: none; }
+    .hero-badge {
+      position: absolute; left: clamp(20px, 5vw, 30px); bottom: clamp(20px, 5vw, 30px); max-width: 260px;
+      padding: 18px 20px; border-radius: 18px; color: white;
+      background: rgba(31,28,25,.66); backdrop-filter: blur(15px); z-index: 2;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+    .hero-badge strong { display: block; font-family: var(--serif); font-size: 1.25rem; font-weight: 400; }
+    .hero-badge small { opacity: .82; }
+
+    section { padding: clamp(60px, 10vw, 140px) 0; }
+    .section-head { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: start; margin-bottom: 56px; }
+    .section-head p { color: var(--muted); max-width: 620px; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 7vw, 90px); align-items: center; }
+    .about-collage { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center; }
+    .about-collage img { width: 100%; height: auto; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .about-collage .portrait { aspect-ratio: 3/4; object-position: center top; }
+    .about-collage .work { aspect-ratio: 4/3; }
+    .about-copy blockquote { margin: 28px 0; font-family: var(--serif); font-size: clamp(1.3rem, 2.6vw, 2.25rem); color: var(--gold-dark); line-height: 1.35; }
+    .about-copy p { color: var(--muted); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 34px; }
+    .stat { padding-top: 20px; border-top: 1px solid var(--line); }
+    .stat strong { display: block; font-family: var(--serif); font-size: 2rem; color: var(--ink); }
+    .stat span { color: var(--muted); font-size: .9rem; }
+
+    .services-wrap { background: var(--paper); border-block: 1px solid var(--line); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .service-card { min-height: 280px; padding: clamp(24px, 4vw, 34px); border: 1px solid var(--line); border-radius: var(--radius); background: var(--cream); display: flex; flex-direction: column; transition: .25s ease; }
+    .service-card:hover { transform: translateY(-7px); box-shadow: var(--shadow); }
+    .service-number { font-family: var(--serif); font-size: 1.4rem; color: var(--gold-dark); margin-bottom: auto; }
+    .service-card h3 { margin: 24px 0 14px; }
+    .service-card p { color: var(--muted); font-size: .95rem; }
+    .service-pill { align-self: flex-start; margin-top: 22px; border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; color: var(--gold-dark); font-size: .78rem; font-weight: 700; }
+
+    .transformations { background: #282522; color: white; }
+    .transformations .eyebrow { color: #d8ba82; }
+    .transformations .section-head p { color: rgba(255,255,255,.65); }
+    .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+    .comparison-card { background: #35312d; border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius); overflow: hidden; }
+    .comparison-frame { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #171513; }
+    .comparison-frame > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .comparison-frame .before { width: 50%; object-position: left center; border-right: 3px solid #d8ba82; z-index: 2; }
+    .comparison-frame input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; z-index: 5; }
+    .comparison-line { position: absolute; top: 50%; left: 50%; translate: -50% -50%; width: 48px; height: 48px; border-radius: 50%; background: white; color: var(--ink); z-index: 4; display: grid; place-items: center; box-shadow: 0 8px 24px rgba(0,0,0,.28); pointer-events: none; font-size: 20px; }
+    .comparison-label { position: absolute; z-index: 3; font-size: .85rem; font-weight: 700; text-transform: uppercase; color: white; }
+    .comparison-label.before-label { left: 16px; top: 16px; }
+    .comparison-label.after-label { right: 16px; top: 16px; }
+    .comparison-copy { padding: 24px; }
+    .comparison-copy h3 { margin-bottom: 8px; }
+    .comparison-copy p { color: rgba(255,255,255,.7); font-size: .95rem; }
+
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+    .gallery-item { margin: 0; position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .3s ease; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(to top, rgba(0,0,0,.5), transparent); color: white; font-size: .9rem; font-weight: 500; }
+
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .faq-intro { }
+    .faq-intro h2 { margin-bottom: 20px; }
+    .faq-intro p { color: var(--muted); margin-bottom: 30px; max-width: 450px; }
+    details { margin-bottom: 24px; }
+    details summary { cursor: pointer; font-weight: 600; color: var(--ink); display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-top: 1px solid var(--line); user-select: none; }
+    details summary::after { content: '↓'; display: inline-block; transition: transform .3s ease; font-size: 1.2rem; }
+    details[open] summary::after { transform: rotate(180deg); }
+    details p { color: var(--muted); padding: 16px 0 0; }
+
+    .cta-card { background: var(--ink); color: white; padding: clamp(40px, 8vw, 80px); border-radius: var(--radius); text-align: center; }
+    .cta-card .eyebrow { color: #d8ba82; justify-content: center; }
+    .cta-card h2 { color: white; margin: 24px 0; }
+    .cta-card p { color: rgba(255,255,255,.75); max-width: 600px; margin: 0 auto 32px; }
+
+    footer { background: var(--ink); color: rgba(255,255,255,.65); padding: 40px 0; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: center; }
+    .footer-grid > div { }
+    .footer-grid strong { color: white; display: block; margin-bottom: 8px; }
+    .footer-social { display: flex; gap: 20px; justify-content: center; }
+    .footer-social a { transition: color .2s; }
+    .footer-social a:hover { color: white; }
+
+    .floating-whatsapp {
+      position: fixed; bottom: 20px; right: 20px; z-index: 50;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25d366; color: white;
+      display: grid; place-items: center;
+      box-shadow: 0 4px 12px rgba(37,211,102,.4);
+      transition: all .3s ease;
+    }
+    .floating-whatsapp:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(37,211,102,.6); }
+
+    @media (max-width: 768px) {
+      .container { width: calc(100% - 20px); }
+      
+      .nav-inner { padding: 0 clamp(15px, 3vw, 20px); }
+      .nav-links { display: none; gap: 16px; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 76px; left: 0; right: 0; background: var(--cream); padding: 20px; border-bottom: 1px solid var(--line); }
+      .menu-toggle { display: block; }
+
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-image { min-height: 400px; }
+      .hero-copy { padding: clamp(30px, 5vw, 40px); }
+
+      .section-head { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-collage { grid-template-columns: 1fr; }
+      .about-collage .work { margin-bottom: 0; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; gap: 40px; }
+
+      .stats { grid-template-columns: 1fr; }
+
+      .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+      .gallery-item { aspect-ratio: 1; }
+
+      .cta-card { padding: clamp(30px, 5vw, 50px); }
+
+      .floating-whatsapp { width: 50px; height: 50px; bottom: 15px; right: 15px; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+      h2 { font-size: clamp(1.3rem, 3.5vw, 2rem); }
+      h3 { font-size: 1.2rem; }
+
+      .eyebrow { font-size: .7rem; }
+      .eyebrow::before { width: 24px; }
+
+      .hero-badge { max-width: 200px; padding: 14px 16px; }
+      .hero-badge strong { font-size: 1rem; }
+      .hero-badge small { font-size: .75rem; }
+
+      .comparison-line { width: 40px; height: 40px; font-size: 16px; }
+      .comparison-label { font-size: .75rem; }
+
+      section { padding: clamp(40px, 8vw, 60px) 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">Dakota<span>Hair</span></div>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="#sobre">Sobre mí</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#transformaciones">Transformaciones</a>
+        <a href="#experiencia">Galería</a>
+        <a href="#preguntas">Preguntas</a>
+        <a class="nav-cta" href="https://wa.me/56926128891?text=Hola%20DakotaHair%2C%20quiero%20agendar" target="_blank" rel="noopener">Agendar</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1>Tu <em>rubio perfecto</em> está aquí.</h1>
+          <p>Especialista en coloración, balayage y cuidado capilar con más de 8 años de experiencia transformando cabello.</p>
+          <div class="hero-actions">
+            <a class="btn" href="https://wa.me/56926128891?text=Hola%20DakotaHair%2C%20quiero%20agendar%20una%20evaluaci%C3%B3n" target="_blank" rel="noopener">Agendar evaluación</a>
+            <a class="btn btn-light" href="#transformaciones">Ver resultados</a>
+          </div>
+          <div class="hero-note">
+            <span></span>
+            Disponible en Santiago
+          </div>
+        </div>
+        <div class="hero-image">
+          <!-- IMAGEN 1: dakota-evento.png -->
+          <img src="dakota-evento.png" alt="DakotaHair - Especialista en rubios trabajando en evento profesional" loading="eager">
+          <div class="hero-badge">
+            <strong>+8 años</strong>
+            <small>transformando cabello</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Sobre mí</span>
+            <h2>Cada cabello es diferente.</h2>
+          </div>
+          <p>Mi objetivo es cuidar la salud de tu cabello mientras creamos transformaciones que resalten tu belleza natural. Trabajo con técnicas avanzadas y productos de calidad.</p>
+        </div>
+        <div class="about-grid">
+          <div class="about-collage">
+            <!-- IMAGEN 7: dakota-perfil.png (retrato con sonrisa) -->
+            <img class="portrait" src="dakota-perfil.png" alt="Dakota - Retrato profesional">
+            <!-- IMAGEN 1: dakota-coloracion.png (Dakota coloreando cabello) -->
+            <img class="work" src="dakota-coloracion.png" alt="Dakota trabajando en coloración">
+          </div>
+          <div class="about-copy">
+            <blockquote>"La belleza no es solo verse bien, es sentirse confiada en tu piel."</blockquote>
+            <p>Utilizo colorimetría avanzada para personalizar cada tono según tu piel, ojos y estilo de vida. Cada cliente es diferente y merece un trabajo único.</p>
+            <div class="stats">
+              <div class="stat">
+                <strong>8+</strong>
+                <span>Años de experiencia</span>
+              </div>
+              <div class="stat">
+                <strong>500+</strong>
+                <span>Clientes transformadas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicios">
+      <div class="services-wrap">
+        <div class="container" style="padding: clamp(60px, 10vw, 140px) 0;">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Servicios</span>
+              <h2>Transformaciones capilares.</h2>
+            </div>
+            <p>Cada servicio está diseñado para cuidar la salud de tu cabello mientras logramos el resultado que deseas.</p>
+          </div>
+          <div class="services-grid">
+            <article class="service-card">
+              <span class="service-number">01</span>
+              <h3>Balayage y coloración</h3>
+              <p>Técnicas avanzadas de iluminación con transiciones naturales y fluidas. Personalizo el tono según tu piel.</p>
+              <span class="service-pill">3-6 horas</span>
+            </article>
+            <article class="service-card">
+              <span class="service-number">02</span>
+              <h3>Cortes y peinados</h3>
+              <p>Diseños personalizados que se adaptan a tus facciones, tipo de cabello y estilo de vida cotidiana.</p>
+              <span class="service-pill">1-2 horas</span>
+            </article>
+            <article class="service-card">
+              <span class="service-number">03</span>
+              <h3>Cuidado capilar</h3>
+              <p>Tratamientos profundos que mantienen la integridad, fuerza y brillo de tu cabello entre transformaciones.</p>
+              <span class="service-pill">Sesiones de 1 hora</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="transformaciones" class="transformations">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="eyebrow">Antes y después</span><h2>Transformaciones reales.</h2></div>
+          <p>Desliza cada fotografía para comparar el punto de partida y el resultado final.</p>
+        </div>
+        <div class="comparison-grid">
+          <article class="comparison-card">
+            <div class="comparison-frame" data-comparison>
+              <!-- IMAGEN 5: despues-blanco.png (cabello blanco resultado) -->
+              <img src="despues-blanco.png" alt="Resultado después - cabello blanco luminoso">
+              <!-- IMAGEN 2: antes-blanco.png (cabello antes de coloración) -->
+              <img class="before" src="antes-blanco.png" alt="Antes - cabello natural">
+              <span class="comparison-label before-label">Antes</span>
+              <span class="comparison-label after-label">Después</span>
+              <span class="comparison-line">↔</span>
+              <input type="range" min="0" max="100" value="50" aria-label="Deslizar para comparar">
+            </div>
+            <div class="comparison-copy"><h3>Transformación luminosa</h3><p>Decoloración segura con acabado blanco puro y sedoso.</p></div>
+          </article>
+          <article class="comparison-card">
+            <div class="comparison-frame" data-comparison>
+              <!-- IMAGEN 6: despues-balayage.png (cabello ondulado con balayage) -->
+              <img src="despues-balayage.png" alt="Resultado después - balayage ondulado">
+              <!-- IMAGEN 3: antes-oscuro.png (cabello oscuro) -->
+              <img class="before" src="antes-oscuro.png" alt="Antes - cabello oscuro">
+              <span class="comparison-label before-label">Antes</span>
+              <span class="comparison-label after-label">Después</span>
+              <span class="comparison-line">↔</span>
+              <input type="range" min="0" max="100" value="50" aria-label="Deslizar para comparar">
+            </div>
+            <div class="comparison-copy"><h3>Balayage dimensional</h3><p>Reflejos cálidos que realzan dimensión y movimiento.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiencia">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="eyebrow">Experiencia</span><h2>Detrás de cada resultado.</h2></div>
+          <p>Formación, dedicación y amor por cada detalle en mi trabajo.</p>
+        </div>
+        <div class="gallery-grid">
+          <!-- IMAGEN 1: dakota-evento.png (trabajando en evento) -->
+          <figure class="gallery-item"><img src="dakota-evento.png" alt="Dakota trabajando en evento profesional"><figcaption class="caption">Precisión experta</figcaption></figure>
+          
+          <!-- IMAGEN 2: dakota-coloracion.png (proceso de coloración) -->
+          <figure class="gallery-item"><img src="dakota-coloracion.png" alt="Proceso de coloración profesional"><figcaption class="caption">Proceso profesional</figcaption></figure>
+          
+          <!-- IMAGEN 5: despues-blanco.png (resultado luminoso) -->
+          <figure class="gallery-item"><img src="despues-blanco.png" alt="Resultado con cabello blanco luminoso"><figcaption class="caption">Acabados luminosos</figcaption></figure>
+          
+          <!-- IMAGEN 4: despues-rubio.png (resultado rubio claro) -->
+          <figure class="gallery-item"><img src="despues-rubio.png" alt="Resultado cabello rubio personalizado"><figcaption class="caption">Tonos personalizados</figcaption></figure>
+          
+          <!-- IMAGEN 7: dakota-perfil.png (retrato) -->
+          <figure class="gallery-item"><img src="dakota-perfil.png" alt="Retrato de Dakota"><figcaption class="caption">Dedicación total</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="preguntas">
+      <div class="container">
+        <div class="faq-grid">
+          <div class="faq-intro">
+            <span class="eyebrow">Preguntas frecuentes</span>
+            <h2>Antes de tu cita.</h2>
+            <p>Información básica para que llegues preparada y disfrutes tu transformación.</p>
+            <a class="btn btn-light" href="https://wa.me/56926128891?text=Tengo%20una%20consulta" target="_blank" rel="noopener">Hacer consulta</a>
+          </div>
+          <div>
+            <details open>
+              <summary>¿Cuánto tiempo toma un balayage?</summary>
+              <p>Dependerá del largo, densidad y técnica elegida, pero generalmente toma entre 3 y 6 horas. Es un proceso que requiere dedicación para lograr resultados naturales y duraderos.</p>
+            </details>
+            <details>
+              <summary>¿Debo ir con el cabello limpio?</summary>
+              <p>Sí, idealmente limpio y seco. Así evaluamos mejor tu base natural y el color se adapta de manera más uniforme a la fibra.</p>
+            </details>
+            <details>
+              <summary>¿Cómo sé qué tono me favorece?</summary>
+              <p>Antes de comenzar revisamos tu tono de piel, base natural, historial capilar y referencias para diseñar una propuesta personalizada que resalte tu belleza.</p>
+            </details>
+            <details>
+              <summary>¿Cómo reservo mi hora?</summary>
+              <p>Escríbeme por WhatsApp indicando el servicio que deseas. Si es posible, adjunta una foto actual de tu cabello y una referencia del resultado que buscas.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta-card">
+          <span class="eyebrow">Tu próxima transformación</span>
+          <h2>Agenda una evaluación personalizada.</h2>
+          <p>Cuéntame qué cambio estás buscando y revisaremos juntas la mejor alternativa para tu cabello.</p>
+          <a class="btn" href="https://wa.me/56926128891?text=Hola%20DakotaHair%2C%20quiero%20agendar%20una%20evaluaci%C3%B3n" target="_blank" rel="noopener">Conversar por WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><strong>DakotaHair</strong> · Especialista en rubios y balayage</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/dakotashair/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://wa.me/56926128891" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <div>© 2026 DakotaHair</div>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp" href="https://wa.me/56926128891?text=Hola%20DakotaHair%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3.5 20.5l1.3-4.4A8.4 8.4 0 1 1 20.5 11.7Z"/></svg>
+  </a>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    toggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.querySelectorAll('[data-comparison]').forEach(frame => {
+      const input = frame.querySelector('input');
+      const before = frame.querySelector('.before');
+      const line = frame.querySelector('.comparison-line');
+      
+      input.addEventListener('input', event => {
+        const value = event.target.value;
+        before.style.width = value + '%';
+        line.style.left = value + '%';
+      });
+    });
+  </script>
+</body>
+</html>
